@@ -19,12 +19,18 @@ app.use(cors());
     
 // })
 
+// Ruta principal para comprobar si el servidor funciona
+app.get('/', (req, res) => {
+    res.send('Servidor funcionando');
+    console.log('Servidor funcionando');
+});
+
 //Middleware para obtener todos los personajes
 app.get('/characters', async (req, res) => {
     try {
         const response = await axios.get(API)
-        const charactersName = await response.data.results
-        res.json(charactersName) //devuelve lista de personajes
+        const characters = await response.data.results
+        res.json(characters) //devuelve lista de personajes
     }catch (error) {
         console.log('Error al obtener personajes', error)
         res.status(500).json({message: 'Error el sevidor'})
@@ -35,18 +41,20 @@ app.get('/characters', async (req, res) => {
 app.get('/characters/:name', async (req, res) => {
     const characterName = req.params.name
     console.log(characterName)
-    try{ //peticion a la API
+    try {
+        // Petición a la API con el parámetro `name`
         const response = await axios.get(`${API}/?name=${characterName}`)
-        const character = await response.data.results[0]
-            // res.json(characterName)
-            const {name, status, species, gender, origin, image} = character
-            //respuesta datos del personaje
-            res.json({ name, status, species, gender, origin: origin.name, image })
-    }catch (error) {
+        const characters = response.data.results;
+        // Verifica si hay resultados
+        if (characters.length > 0) {
+            res.json(characters)
+        } else {
+            res.status(404).json({ message: 'Personaje no encontrado' })
+        }
+    } catch (error) {
         console.log('Error al obtener personaje', error)
-        res.status(404).json({message: 'Personaje no encontrado'})
+        res.status(404).json({ message: 'Personaje no encontrado' })
     }
-    
 })
 
 app.use((req,res) => {
@@ -56,3 +64,52 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor en el puerto http://localhost:${PORT}/characters`)
 })
+
+
+/*  
+
+const express = require("express")
+const app = express()
+const axios = require("axios")
+const cors = require("cors")
+
+const urlBase = "https://rickandmortyapi.com/api/character"
+
+app.use(cors({
+  origin: 'http://127.0.0.1:5500'
+}))
+
+app.get("/characters", async ( req, res ) => {
+  try {
+    const response = await axios.get(urlBase)
+    const data = response.data.results
+    res.json(data)
+
+  } catch (err) {
+    res.status(500).json({mensaje: "Personaje no encontrado"})
+  }
+})
+
+app.get("/characters/:name", async ( req, res ) => {
+  const characterName = req.params.name
+  console.log(characterName)
+  try {
+    const response = await axios.get(`${urlBase}/?name=${characterName}`)
+    const data = response.data.results
+
+    const characterData = data.map(character => {
+      const {name, status, species, gender, image, origin: {name: origin}} = character
+      return {name, status, species, gender, image, origin}
+    })
+
+    res.json(characterData)
+
+  } catch (err) {
+    res.status(500).json({mensaje: "Personaje no encontrado"})
+  }
+})
+
+const PORT = 4000
+app.listen(PORT, () => console.log(`El servidor está escuchando en el puerto http://localhost:${PORT}`))
+
+*/

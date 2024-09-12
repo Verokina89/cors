@@ -47,28 +47,66 @@ table {
 body {
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	flex-direction: column;
 	max-width: 100%;
-	height: 400px;
+	height: 100vh;
 	gap: 20px;
-	background-image: ('https://assets.pokemon.com//assets/cms2-es-es/img/misc/virtual-backgrounds/sword-shield/pokemon-in-the-wild.png');
+	background-image: url('https://wallpapers.com/images/hd/bong-rick-and-morty-stoner-322yp868ciqn38xl.jpg');
+	background-size:auto; /* Ajusta la imagen para que cubra todo el body */
+	
+	background-position: absolute; /* Centra la imagen en el body */
 }
 
 h1{
 	font-size: 50px;
 }
 
-#characterInfo{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	background-color: rgb(9, 10, 9);
-	color: rgb(196, 196, 20);
-	border-radius: 8px;
-} 
 
 button{
     border-radius: none;
+}
+
+/* Contenedor que contiene todas las tarjetas */
+#characterInfo {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en varias filas */
+    justify-content: center;
+	gap: 20px; /* Añade espacio entre las tarjetas */
+    padding: 20px;
+    margin: 0 auto; /* Centra el contenedor dentro de la página */
+}
+
+#characterInfor, p {
+	color: rgb(19, 17, 17);
+	background-color: #8b89894e;
+}
+
+h2 {
+	color: blue;
+	font-size: 20px;
+}
+
+/* Estilos para cada tarjeta */
+.character-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 200px; /* Ajusta el tamaño de las tarjetas */
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+/* Imagen de cada personaje */
+.character-card img {
+    width: 20px;
+	height: 20px;
+    border-radius: 50%;
+}
+
+/* Texto dentro de la tarjeta */
+.character-card p {
+    font-size: 1em;
+    color: #040404;
 }
