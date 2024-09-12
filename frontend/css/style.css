@@ -63,7 +63,9 @@ h1{
 
 
 button{
-    border-radius: none;
+	border-radius: 5px;
+    border: none;
+	background-color: rgb(61, 198, 198);
 }
 
 /* Contenedor que contiene todas las tarjetas */
