@@ -1,11 +1,16 @@
 //fetch para traer datos del back
 function getCharacterInfo() {
-    const characterName = document.getElementById('characterName')
-    const characterInfo = document.getElementById('characterInfo');
+    const characterName = document.getElementById('characterName').value.toLocaleLowerCase()
+    const characterInfo = document.getElementById('characterInfo')
 
+    fetch(`http://localhost:3001/characters/?${characterName}`)
+        .then(response => {
+             if (!response.ok) {
+                throw new Error("No se encontró el personaje");
+            }
+            return response.json();
+        })
 
-    fetch(`http://localhost:3000/characters/${characterName}`)
-        .then(response => response.json())
          //Pasan los datos de la misma manera que el   destructuring del back.
         .then(data => {
             const { name, status, species, gender, origin, image } = data;
