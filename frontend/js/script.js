@@ -3,7 +3,7 @@ function getCharacterInfo() {
     const characterName = document.getElementById('characterName').value.toLocaleLowerCase()
     const characterInfo = document.getElementById('characterInfo')
 
-    fetch(`http://localhost:3001/characters/?${characterName}`)
+    fetch(`http://localhost:3000/characters/${characterName}`)
         .then(response => {
              if (!response.ok) {
                 throw new Error("No se encontró el personaje");

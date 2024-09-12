@@ -8,6 +8,10 @@ const API = 'https://rickandmortyapi.com/api/character'
 //Middleware cors para peticiones del FRONT.
 app.use(cors()); 
 
+// app.use(cors({
+//     origin: ['http://localhost:3001']
+// })) 
+
 // //Middleware para ver en la teminal.
 // app.get('/', (req, res) => {
 //     res.send('servidor funciona') //En el navegador sin `...characters/Rick`
@@ -32,7 +36,7 @@ app.get('/characters/:name', async (req, res) => {
     const characterName = req.params.name
     console.log(characterName)
     try{ //peticion a la API
-        const response = await axios.get(`${API}/?${name}`)
+        const response = await axios.get(`${API}/?name=${characterName}`)
         const character = await response.data.results[0]
             // res.json(characterName)
             const {name, status, species, gender, origin, image} = character
@@ -48,7 +52,7 @@ app.get('/characters/:name', async (req, res) => {
 app.use((req,res) => {
     res.send('<h1>⚠️Pagina no encontrada⚠️')
 })
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor en el puerto http://localhost:${PORT}/characters/`)
+    console.log(`Servidor en el puerto http://localhost:${PORT}/characters`)
 })
