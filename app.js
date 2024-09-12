@@ -28,13 +28,16 @@ app.get('/characters', async (req, res) => {
 })
 
 //Middleware para obtener personajes por nombre.
-app.get('characters/:name', async (res, req) => {
+app.get('/characters/:name', async (req, res) => {
     const name = req.params.name
     
-    try{
+    try{ //peticion a la API
         const response = await axios.get(`${API}${name}`)
-        const characterName = await response.data.results[0]
-            res.json(characterName)
+        const character = await response.data.results[0]
+            // res.json(characterName)
+            const {name, status, species, gender, origin, image} = character
+            //respuesta datos del personaje
+            res.json({ name, status, species, gender, origin: origin.name, image })
     }catch (error) {
         console.log('Error al obtener personaje', error)
         res.status(404).json({message: 'Personaje no encontrado'})
@@ -47,5 +50,5 @@ app.use((req,res) => {
 })
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor en el puerto http://localhost:${PORT}/characters`)
+    console.log(`Servidor en el puerto http://localhost:${PORT}/characters/`)
 })
